@@ -25,7 +25,7 @@ router.get("/getMessages/:user1Id/:user2Id", async (req,res)=>{
 router.post("/uploadFile",uploadFiles.single('file'), async (req,res)=>{
     try {
         const {sender,receiver}=req.body;
-        const filePath = await `http://localhost:4000/${req.file.path}`;
+        const filePath = await `https://chatapp-735s.onrender.com/${req.file.path}`;
         const message = {
             sender:sender,
             receiver:receiver,
@@ -38,7 +38,6 @@ router.post("/uploadFile",uploadFiles.single('file'), async (req,res)=>{
         res.status(500).send(error.message);
     }
 })
-
 
 
 module.exports = router;
