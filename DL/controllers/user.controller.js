@@ -19,8 +19,8 @@ async function readOne(filter) {
     let res = await read(filter)
     return res[0]
 }
-async function update(_id, newData) {
-    return await userData.updateOne({ _id: _id }, newData)
+async function update(email, newData) {
+    return await userData.updateOne({ email: email}, newData)
 }
 async function del(id) {
     return await update(id, { isActive: false })

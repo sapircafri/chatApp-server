@@ -22,7 +22,7 @@ const server = app.listen(PORT, () => {
     console.log(`server listening to port ${PORT}`);
 })
 
-
+const massageService = require('../server/BL/message.service');
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ server });
 
@@ -45,6 +45,8 @@ wss.on('connection', (ws, req) => {
         [...wss.clients]
             .filter(c => c.userId == messageData.receiver)
             .forEach(c => c.send(JSON.stringify(messageData)))
+
+        massageService.createNewMessage(messageData);
     })
 
  

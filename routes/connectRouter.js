@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 
 const userService = require('../BL/user.service')
 let user;
+
 router.post("/sign-up", async (req, res) => {
     try {
         const { fname, lname, email, Password } = req.body;
@@ -15,8 +16,9 @@ router.post("/sign-up", async (req, res) => {
             password,
             email,
         };
-        userService.createNewUser(user)
-        res.send(user)
+        const newUser = await userService.createNewUser(user)
+        const token = await auth.createToken(newUser.email)
+        res.send([newUser, token])
 
     } catch (error) {
         res.sendStatus(500).send("error: "+ error)
@@ -54,6 +56,28 @@ router.get("/checkToken", async (req, res) => {
    
 })
 
+router.post('/forgetPassword',async (req,res)=>{
+    try {
+      const { email, code } = req.body;
+    //   await userService.forgetPassword(email,code);
+      console.log(email,code);
+      res.status(200).send("succses")
+  
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  })
+  
+  router.post('/resetPassword',async (req,res)=>{
+    try {
+      const { email ,newPassword } = req.body;
+      await userService.changePassword(email,newPassword);
+      res.status(200).send("password change")
+  
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  })
 
 
 
