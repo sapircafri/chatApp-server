@@ -22,7 +22,7 @@ const server = app.listen(PORT, () => {
     console.log(`server listening to port ${PORT}`);
 })
 
-const massageService = require('../server/BL/message.service');
+const massageService = require('./BL/message.service');
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ server });
 
