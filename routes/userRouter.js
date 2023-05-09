@@ -34,11 +34,10 @@ router.get("/getUsersByName/:searchQuery", async (req,res)=>{
 
 router.post("/uploadAvatar",uploadImage.single('image'), async (req,res)=>{
     try {
-        const {clientId}=req.body;
+        const {email}=req.body;
         const imagePath = await `https://chatapp-735s.onrender.com/${req.file.path}`;
-
-        await userService.updateUser({_id:clientId,newData:{avatar:imagePath}})
-        res.send("sucsess");
+        await userService.updateUser({email:email,newData:{avatar:imagePath}})
+        res.send(imagePath);
         
     } catch (error) {
         res.status(500).send(error.message);
